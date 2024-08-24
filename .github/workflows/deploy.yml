@@ -27,7 +27,7 @@ jobs:
       - name: Create or update S3 bucket
         run: |
           aws cloudformation deploy \
-            --template-file infrastructure/template.yml \
+            --template-file infrastructure/s3-bucket.yml \
             --stack-name sneaker-tracker-bucket-stack \
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
@@ -50,7 +50,7 @@ jobs:
       - name: Deploy CloudFormation Stack for Lambda
         run: |
           aws cloudformation deploy \
-            --template-file infrastructure/template.yml \
+            --template-file infrastructure/lambda.yml \
             --stack-name sneaker-tracker-lambda-stack \
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
