@@ -1,0 +1,32 @@
+name: Deploy S3 Bucket
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION}}
+
+      - name: Upload IAM Policy to S3
+        run: |
+          aws s3 cp infrastructure/policies/s3_bucket_policy.json s3://your-s3-bucket-name/s3_bucket_policy.json
+
+      - name: Deploy CloudFormation Stack
+        run: |
+          aws cloudformation deploy \
+            --template-file infrastructure/cloudformation.yml \
+            --stack-name my-s3-bucket-stack \
+            --parameter-overrides PolicyS3Bucket=your-s3-bucket-name PolicyS3Key=s3_bucket_policy.json
