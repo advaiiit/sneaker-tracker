@@ -32,13 +32,13 @@ Resources:
                   - "s3:GetObject"
                 Resource: !Sub "arn:aws:s3:::${MyS3Bucket}/*"
 
-  SneakerTrackerFunction:
-    Type: "AWS::Lambda::Function"
-    Properties:
-      FunctionName: "SneakerTrackerFunction"
-      Handler: "sneaker_tracker_lambda.lambda_handler"
-      Role: !GetAtt LambdaExecutionRole.Arn
-      Code:
-        S3Bucket: !Ref MyS3Bucket
-        S3Key: "sneaker_tracker_lambda.zip"
-      Runtime: "python3.8"
+  # SneakerTrackerFunction:
+  #   Type: "AWS::Lambda::Function"
+  #   Properties:
+  #     FunctionName: "SneakerTrackerFunction"
+  #     Handler: "sneaker_tracker_lambda.lambda_handler"
+  #     Role: !GetAtt LambdaExecutionRole.Arn
+  #     Code:
+  #       S3Bucket: !Ref MyS3Bucket
+  #       S3Key: "sneaker_tracker_lambda.zip"
+  #     Runtime: "python3.8"
