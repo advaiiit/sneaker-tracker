@@ -55,5 +55,5 @@ jobs:
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
               LambdaFunctionName=SneakerTrackerFunction \
-              BucketName= sneaker-tracker-bucket\
+              BucketName=sneaker-tracker-bucket\
               S3Key=sneaker_tracker_lambda.zip
