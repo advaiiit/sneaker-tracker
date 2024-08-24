@@ -47,13 +47,13 @@ jobs:
         run: |
           aws s3 ls s3://sneaker-tracker-bucket/ --recursive
 
-      # - name: Deploy CloudFormation Stack for Lambda
-      #   run: |
-      #     aws cloudformation deploy \
-      #       --template-file infrastructure/template.yml \
-      #       --stack-name sneaker-tracker-lambda-stack \
-      #       --capabilities CAPABILITY_NAMED_IAM \
-      #       --parameter-overrides \
-      #         LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
-      #         BucketName=$BUCKET_NAME \
-      #         S3Key=sneaker_tracker_lambda.zip
+      - name: Deploy CloudFormation Stack for Lambda
+        run: |
+          aws cloudformation deploy \
+            --template-file infrastructure/template.yml \
+            --stack-name sneaker-tracker-lambda-stack \
+            --capabilities CAPABILITY_NAMED_IAM \
+            --parameter-overrides \
+              LambdaFunctionName=SneakerTrackerFunction \
+              BucketName= sneaker-tracker-bucket\
+              S3Key=sneaker_tracker_lambda.zip
