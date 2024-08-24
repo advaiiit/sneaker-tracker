@@ -34,6 +34,6 @@ Resources:
       Handler: "sneaker_tracker_lambda.lambda_handler"
       Role: !GetAtt LambdaExecutionRole.Arn
       Code:
-        S3Bucket: !Ref MyS3Bucket
+        S3Bucket: "sneaker-tracker-bucket"
         S3Key: "sneaker_tracker_lambda.zip"
       Runtime: "python3.8"
