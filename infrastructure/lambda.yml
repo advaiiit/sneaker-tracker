@@ -25,7 +25,7 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - "s3:GetObject"
-                Resource: !Sub "arn:aws:s3:::${MyS3Bucket}/*"
+                Resource: !Sub "arn:aws:s3:::sneaker-tracker-bucket/*"
 
   SneakerTrackerFunction:
     Type: "AWS::Lambda::Function"
@@ -37,3 +37,5 @@ Resources:
         S3Bucket: "sneaker-tracker-bucket"
         S3Key: "sneaker_tracker_lambda.zip"
       Runtime: "python3.8"
+      MemorySize: 128
+      Timeout: 30
