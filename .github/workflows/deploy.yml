@@ -20,9 +20,30 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "${{secrets.AWS_REGION}}"
 
-      - name: Deploy CloudFormation stack
+      - name: Convert Python code to zip
+        run: |
+          zip -r sneaker_tracker_lambda.zip src/sneaker_tracker_lambda.py
+
+      - name: Create of update s3 bucket
         run: |
           aws cloudformation deploy \
-            --template-file infrastructure/s3-bucket.yml \
+            --template-file infrastructure/template.yml \
             --stack-name sneaker-tracker-bucket-stack \
-            --capabilities CAPABILITY_NAMED_IAM
+            --capabilities CAPABILITY_NAMED_IAM \
+            --parameter-overrides \
+              BucketName=$BUCKET_NAME
+
+      - name: Upload code to S3
+        run: |
+          aws s3 cp sneaker_tracker_lambda.zip s3://$BUCKET_NAME/sneaker_tracker_lambda.zip
+
+      - name: Deploy CloudFormation Stack for Lambda
+        run: |
+          aws cloudformation deploy \
+            --template-file infrastructure/template.yml \
+            --stack-name sneaker-trackerlambda-stack \
+            --capabilities CAPABILITY_NAMED_IAM \
+            --parameter-overrides \
+              LambdaFunctionName=$LAMBDA_FUNCTION_NAME \
+              BucketName=$BUCKET_NAME \
+              S3Key=sneaker_tracker_lambda.zip
