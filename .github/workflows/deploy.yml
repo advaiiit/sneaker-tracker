@@ -1,9 +1,9 @@
-name: Deploy S3 Bucket
+name: Deploy CloudFormation Stack
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   deploy:
@@ -11,22 +11,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION}}
+          aws-region: "${{secrets.AWS_REGION}}"
 
-      - name: Upload IAM Policy to S3
-        run: |
-          aws s3 cp infrastructure/policies/s3_bucket_policy.json s3://your-s3-bucket-name/s3_bucket_policy.json
-
-      - name: Deploy CloudFormation Stack
+      - name: Deploy CloudFormation stack
         run: |
           aws cloudformation deploy \
-            --template-file infrastructure/cloudformation.yml \
-            --stack-name my-s3-bucket-stack \
-            --parameter-overrides PolicyS3Bucket=your-s3-bucket-name PolicyS3Key=s3_bucket_policy.json
+            --template-file s3-bucket.yml \
+            --stack-name sneaker-tracker-bucket-stack \
+            --capabilities CAPABILITY_NAMED_IAM

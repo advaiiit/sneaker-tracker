@@ -1,0 +1,6 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  MyS3Bucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: !Sub "sneaker-tracker-bucket-${AWS::AccountId}-${AWS::Region}"
