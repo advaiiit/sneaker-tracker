@@ -33,7 +33,7 @@ jobs:
             --parameter-overrides \
               BucketName=sneaker-tracker-bucket
 
-       - name: Wait for S3 bucket to be available
+      - name: Wait for S3 bucket to be available
         run: |
           echo "Waiting for S3 bucket to be available..."
           aws s3api wait bucket-exists --bucket sneaker-tracker-bucket
