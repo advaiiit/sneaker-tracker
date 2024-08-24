@@ -22,7 +22,8 @@ jobs:
 
       - name: Convert Python code to zip
         run: |
-          zip -r sneaker_tracker_lambda.zip src/sneaker_tracker_lambda.py
+          cd src \
+          zip -r ../sneaker_tracker_lambda.zip src/sneaker_tracker_lambda.py
 
       - name: Create or update S3 bucket
         run: |
