@@ -23,6 +23,6 @@ jobs:
       - name: Deploy CloudFormation stack
         run: |
           aws cloudformation deploy \
-            --template-file s3-bucket.yml \
+            --template-file infrastructure/s3-bucket.yml \
             --stack-name sneaker-tracker-bucket-stack \
             --capabilities CAPABILITY_NAMED_IAM
