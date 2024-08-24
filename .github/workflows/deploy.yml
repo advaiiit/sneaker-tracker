@@ -31,20 +31,21 @@ jobs:
             --stack-name sneaker-tracker-bucket-stack \
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
-              BucketName=$BUCKET_NAME
+              BucketName=sneaker-tracker-bucket
 
-      # - name: Wait for S3 bucket to be available
-      #   run: |
-      #     echo "Waiting for S3 bucket to be available..."
-      #     aws s3api wait bucket-exists --bucket $BUCKET_NAME
+       - name: Wait for S3 bucket to be available
+        run: |
+          echo "Waiting for S3 bucket to be available..."
+          aws s3api wait bucket-exists --bucket sneaker-tracker-bucket
 
       - name: Upload code to S3
         run: |
-          aws s3 cp sneaker_tracker_lambda.zip s3://$BUCKET_NAME/sneaker_tracker_lambda.zip
+          echo "Uploading Lambda code to S3..."
+          aws s3 cp sneaker_tracker_lambda.zip s3://sneaker-tracker-bucket/sneaker_tracker_lambda.zip
 
-      # - name: Verify S3 upload
-      #   run: |
-      #     aws s3 ls s3://$BUCKET_NAME/ --recursive
+      - name: Verify S3 upload
+        run: |
+          aws s3 ls s3://sneaker-tracker-bucket/ --recursive
 
       # - name: Deploy CloudFormation Stack for Lambda
       #   run: |
