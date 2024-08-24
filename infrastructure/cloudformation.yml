@@ -1,0 +1,26 @@
+# infrastructure/cloudformation.yml
+
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation template to create an S3 bucket with IAM policies
+
+Resources:
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "s3-bucket-${AWS::AccountId}-${AWS::Region}"
+      AccessControl: Private
+
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MyS3Bucket
+      PolicyDocument:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: !Sub "s3://${PolicyS3Bucket}/${PolicyS3Key}"
+
+Outputs:
+  BucketName:
+    Description: Name of the S3 bucket
+    Value: !Ref MyS3Bucket
