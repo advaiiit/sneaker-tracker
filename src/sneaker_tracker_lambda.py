@@ -12,7 +12,7 @@ def lambda_handler(event, context):
 
     headers = {
         'x-rapidapi-host': 'real-time-flipkart-api.p.rapidapi.com',
-        'x-rapidapi-key': '5474778fb9msh8b56259111e5167p1293bejsn5fa61ff373d1'
+        'x-rapidapi-key':  os.environ.get("API_KEY")
     }
 
     try:
